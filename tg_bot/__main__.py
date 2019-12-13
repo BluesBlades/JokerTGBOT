@@ -18,13 +18,18 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Hey {}, My name is {}!
+hoi {}, my name is {}! if you have any questions about how to use me please give me /help... 
 
-My Creator is t.me/Countesses
+im a group manager bot maintained by  [this person](tg://user?id={}).
 
-If you have any questions about how to use me please give me /help... 
+My future updates will be put into This Channel - @MarieChechi & My Support Group @InFoTelGroup.
+
+This is my [Deploy Code](https://heroku.com/deploy?template=https://github.com/TGExplore/Marie-2.0-English),
+you can create clone same like me..
 
 For more commands click /help...
+
+**Keep in mind that any changes you DO do to the source have to be on github, as per the license.**
 
 """
 
@@ -33,9 +38,9 @@ HELP_STRINGS = """
 Hello! my name *{}*.
 
 *Main* available commands:
- - /start: Start the BOT...
- - /help: To see what this BOT can do...
- - /donate: To donate my poor OWNER...
+ - /start: Start the bot...
+ - /help: help....
+ - /donate: To find out more about donating!
  - /settings:
    - in PM: To find out what SETTINGS you have set....
    - in a group:
@@ -45,10 +50,10 @@ And the following:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll of the following commands  / or ! can  be used...\n")
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
-It took lots of work for [ﾌøҜ𝖊ℜ™](t.me/Countesses) to get me to where I am now, and every donation helps \
+It took lots of work for [my creator](t.me/SonOfLars) to get me to where I am now, and every donation helps \
 motivate him to make me even better. All the donation money will go to a better VPS to host me, and/or beer \
-(see his bio!). He's just a poor people, so every little helps!
-There are two ways of paying him; [OVO](081336470040)."""
+(see his bio!). He's just a poor student, so every little helps!
+There are two ways of paying him; [PayPal](paypal.me/PaulSonOfLars), or [Monzo](monzo.me/paulnionvestergaardlarsen)."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -69,7 +74,7 @@ for module_name in ALL_MODULES:
     if not imported_module.__mod_name__.lower() in IMPORTED:
         IMPORTED[imported_module.__mod_name__.lower()] = imported_module
     else:
-        raise Exception("Can't have two modules with the same name! Please CHANGE one")
+        raise Exception("Can't have two modules with the same name! Please change one")
 
     if hasattr(imported_module, "__help__") and imported_module.__help__:
         HELPABLE[imported_module.__mod_name__.lower()] = imported_module
@@ -111,7 +116,7 @@ def send_help(chat_id, text, keyboard=None):
 def test(bot: Bot, update: Update):
     # pprint(eval(str(update)))
     # update.effective_message.reply_text("Hola tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
-    update.effective_message.reply_text("This person EDITED a message")
+    update.effective_message.reply_text("This person edited a message")
     print(update.effective_message)
 
 
@@ -140,7 +145,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN)
     else:
-        update.effective_message.reply_text("WAKED UP😏😏😏")
+        update.effective_message.reply_text("waked up😏😏😏")
 
 
 # for test purposes
@@ -212,11 +217,11 @@ def help_button(bot: Bot, update: Update):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not MODIFIED":
+        if excp.message == "Message is not modified":
             pass
         elif excp.message == "Query_id_invalid":
             pass
-        elif excp.message == "Message can't be DELETED":
+        elif excp.message == "Message can't be deleted":
             pass
         else:
             LOGGER.exception("Exception in help buttons. %s", str(query.data))
@@ -328,11 +333,11 @@ def settings_button(bot: Bot, update: Update):
         bot.answer_callback_query(query.id)
         query.message.delete()
     except BadRequest as excp:
-        if excp.message == "Message is not MODIFIED":
+        if excp.message == "Message is not modified":
             pass
         elif excp.message == "Query_id_invalid":
             pass
-        elif excp.message == "Message can't be DELETED":
+        elif excp.message == "Message can't be deleted":
             pass
         else:
             LOGGER.exception("Exception in settings buttons. %s", str(query.data))
@@ -398,7 +403,7 @@ def migrate_chats(bot: Bot, update: Update):
     for mod in MIGRATEABLE:
         mod.__migrate__(old_chat, new_chat)
 
-    LOGGER.info("Successfully MIGRATED!")
+    LOGGER.info("Successfully migrated!")
     raise DispatcherHandlerStop
 
 
@@ -446,5 +451,5 @@ def main():
 
 
 if __name__ == '__main__':
-    LOGGER.info("Successfully LOADED modules: " + str(ALL_MODULES))
+    LOGGER.info("Successfully loaded modules: " + str(ALL_MODULES))
     main()

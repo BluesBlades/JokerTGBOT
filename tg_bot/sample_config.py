@@ -11,8 +11,8 @@ class Config(object):
 
     # REQUIRED
     API_KEY = ""
-    OWNER_ID = "761537028" # If you dont know, run the bot and do /id in your private chat with it
-    OWNER_USERNAME = "Countesses"
+    OWNER_ID = "683538773" # If you dont know, run the bot and do /id in your private chat with it
+    OWNER_USERNAME = "ViruZs"
 
     # RECOMMENDED
     SQLALCHEMY_DATABASE_URI = 'sqldbtype://username:pw@hostname:port/db_name'  # needed for any database modules
@@ -26,7 +26,7 @@ class Config(object):
     SUDO_USERS = []  # List of id's (not usernames) for users which have sudo access to the bot.
     SUPPORT_USERS = []  # List of id's (not usernames) for users which are allowed to gban, but can also be banned.
     WHITELIST_USERS = []  # List of id's (not usernames) for users which WONT be banned/kicked by the bot.
-    DONATION_LINK = None  # OVO
+    DONATION_LINK = None  # EG, paypal
     CERT_PATH = None
     PORT = 5000
     DEL_CMDS = False  # Whether or not you should delete "blue text must click" commands
