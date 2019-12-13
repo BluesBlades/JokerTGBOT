@@ -27,10 +27,10 @@ def allow_connections(bot: Bot, update: Update, args: List[str]) -> str:
             print(var)
             if (var == "no"):
                 sql.set_allow_connect_to_chat(chat.id, False)
-                update.effective_message.reply_text("Disabled CONNECTIONS to this chat for users")
+                update.effective_message.reply_text("Disabled connections to this chat for users")
             elif(var == "yes"):
                 sql.set_allow_connect_to_chat(chat.id, True)
-                update.effective_message.reply_text("Enabled CONNECTIONS to this chat for users")
+                update.effective_message.reply_text("Enabled connections to this chat for users")
             else:
                 update.effective_message.reply_text("Please enter on/yes/off/no in group!")
         else:
@@ -57,7 +57,7 @@ def connect_chat(bot, update, args):
                 connection_status = sql.connect(update.effective_message.from_user.id, connect_chat)
                 if connection_status:
                     chat_name = dispatcher.bot.getChat(connected(bot, update, chat, user.id, need_admin=False)).title
-                    update.effective_message.reply_text("Successfully CONNECTED to *{}*".format(chat_name), parse_mode=ParseMode.MARKDOWN)
+                    update.effective_message.reply_text("Successfully connected to *{}*".format(chat_name), parse_mode=ParseMode.MARKDOWN)
 
                     #Add chat to connection history
                     history = sql.get_history(user.id)
@@ -95,11 +95,11 @@ def connect_chat(bot, update, args):
                     keyboard(bot, update)
                     
                 else:
-                    update.effective_message.reply_text("CONNECTION failed!")
+                    update.effective_message.reply_text("Connection failed!")
             else:
-                update.effective_message.reply_text("CONNECTIONS to this chat not allowed!")
+                update.effective_message.reply_text("Connections to this chat not allowed!")
         else:
-            update.effective_message.reply_text("Input chat ID to CONNECT!")
+            update.effective_message.reply_text("Input chat ID to connect!")
             history = sql.get_history(user.id)
             print(history.user_id, history.chat_id1, history.chat_id2, history.chat_id3, history.updated)
 
@@ -115,7 +115,7 @@ def disconnect_chat(bot, update):
             #Rebuild user's keyboard
             keyboard(bot, update)
         else:
-           update.effective_message.reply_text("DISCONNECTION unsuccessfull!")
+           update.effective_message.reply_text("Disconnection unsuccessfull!")
     else:
         update.effective_message.reply_text("Usage restricted to PMs only")
 
@@ -131,12 +131,12 @@ def connected(bot, update, chat, user_id, need_admin=True):
                 if bot.get_chat_member(conn_id, update.effective_message.from_user.id).status in ('administrator', 'creator') or user_id in SUDO_USERS:
                     return conn_id
                 else:
-                    update.effective_message.reply_text("You need to be a ADMIN in a CONNECTED group!")
+                    update.effective_message.reply_text("You need to be a admin in a connected group!")
                     exit(1)
             else:
                 return conn_id
         else:
-            update.effective_message.reply_text("Group changed rights connection or you are not ADMIN anymore.\nI'll disconnect you.")
+            update.effective_message.reply_text("Group changed rights connection or you are not admin anymore.\nI'll disconnect you.")
             disconnect_chat(bot, update)
             exit(1)
     else:

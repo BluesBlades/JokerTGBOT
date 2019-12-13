@@ -48,7 +48,7 @@ def check_flood(bot: Bot, update: Update) -> str:
         sql.set_flood(chat.id, 0)
         return "<b>{}:</b>" \
                "\n#INFO" \
-               "\nDon't have kick permissions, so automatically disabled ANTIFLOOD.".format(chat.title)
+               "\nDon't have kick permissions, so automatically disabled antiflood.".format(chat.title)
 
 
 @run_async
@@ -64,20 +64,20 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
         val = args[0].lower()
         if val == "off" or val == "no" or val == "0":
             sql.set_flood(chat.id, 0)
-            message.reply_text("I will no longer dismiss those who FLOOD.")
+            message.reply_text("I will no longer dismiss those who flood.")
 
         elif val.isdigit():
             amount = int(val)
             if amount <= 0:
                 sql.set_flood(chat.id, 0)
-                message.reply_text("I will no longer dismiss those who FLOOD.")
+                message.reply_text("I will no longer dismiss those who flood.")
                 return "<b>{}:</b>" \
                        "\n#SETFLOOD" \
                        "\n<b>Admin:</b> {}" \
                        "\nDisabled antiflood.".format(html.escape(chat.title), mention_html(user.id, user.first_name))
 
             elif amount < 3:
-                message.reply_text("ANTIFLOOD has to be either 0 (disabled), or a number bigger than 3!")
+                message.reply_text("Antiflood has to be either 0 (disabled), or a number bigger than 3!")
                 return ""
 
             else:
@@ -114,7 +114,7 @@ def __migrate__(old_chat_id, new_chat_id):
 def __chat_settings__(chat_id, user_id):
     limit = sql.get_flood_limit(chat_id)
     if limit == 0:
-        return "*NOT* currently enforcing FLOOD control."
+        return "*Not* currently enforcing flood control."
     else:
         return " The message control is set to `{}`.".format(limit)
 
@@ -123,7 +123,7 @@ __help__ = """
  - /flood: To know your current message control..
 
 *Admin only:*
- - /setflood <int/'no'/'off'>: enables or disables FLOOD control
+ - /setflood <int/'no'/'off'>: enables or disables flood control
 """
 
 __mod_name__ = "AntiFlood"

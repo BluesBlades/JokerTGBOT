@@ -33,7 +33,7 @@ if is_module_loaded(FILENAME):
             elif result == "":
                 pass
             else:
-                LOGGER.warning("%s was set as LOGGABLE, but had no return statement.", func)
+                LOGGER.warning("%s was set as loggable, but had no return statement.", func)
 
             return result
 
@@ -45,7 +45,7 @@ if is_module_loaded(FILENAME):
             bot.send_message(log_chat_id, result, parse_mode=ParseMode.HTML)
         except BadRequest as excp:
             if excp.message == "Chat not found":
-                bot.send_message(orig_chat_id, "This LOG channel has been deleted - unsetting.")
+                bot.send_message(orig_chat_id, "This log channel has been deleted - unsetting.")
                 sql.stop_chat_logging(orig_chat_id)
             else:
                 LOGGER.warning(excp.message)
@@ -65,12 +65,12 @@ if is_module_loaded(FILENAME):
         if log_channel:
             log_channel_info = bot.get_chat(log_channel)
             message.reply_text(
-                "This group has all it's LOGS sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),
+                "This group has all it's logs sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),
                                                                          log_channel),
                 parse_mode=ParseMode.MARKDOWN)
 
         else:
-            message.reply_text("No LOG channel has been set for this group!")
+            message.reply_text("No log channel has been set for this group!")
 
 
     @run_async
@@ -89,11 +89,11 @@ if is_module_loaded(FILENAME):
                 if excp.message == "Message to delete not found":
                     pass
                 else:
-                    LOGGER.exception("Error deleting message in LOG channel. Should work anyway though.")
+                    LOGGER.exception("Error deleting message in log channel. Should work anyway though.")
 
             try:
                 bot.send_message(message.forward_from_chat.id,
-                                 "This channel has been set as the LOG channel for {}.".format(
+                                 "This channel has been set as the log channel for {}.".format(
                                      chat.title or chat.first_name))
             except Unauthorized as excp:
                 if excp.message == "Forbidden: bot is not a member of the channel chat":
@@ -119,14 +119,14 @@ if is_module_loaded(FILENAME):
         log_channel = sql.stop_chat_logging(chat.id)
         if log_channel:
             bot.send_message(log_channel, "Channel has been unlinked from {}".format(chat.title))
-            message.reply_text("LOG channel has been un-set.")
+            message.reply_text("Log channel has been un-set.")
 
         else:
-            message.reply_text("No LOG channel has been set yet!")
+            message.reply_text("No log channel has been set yet!")
 
 
     def __stats__():
-        return "{} LOG channels set.".format(sql.num_logchannels())
+        return "{} log channels set.".format(sql.num_logchannels())
 
 
     def __migrate__(old_chat_id, new_chat_id):
@@ -139,7 +139,7 @@ if is_module_loaded(FILENAME):
             log_channel_info = dispatcher.bot.get_chat(log_channel)
             return "This group has all it's logs sent to: {} (`{}`)".format(escape_markdown(log_channel_info.title),
                                                                             log_channel)
-        return "No LOG channel is set for this group!"
+        return "No log channel is set for this group!"
 
 
     __help__ = """

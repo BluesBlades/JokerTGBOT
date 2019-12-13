@@ -38,7 +38,7 @@ def gkick(bot: Bot, update: Update, args: List[str]):
         if excp.message in GKICK_ERRORS:
             pass
         else:
-            message.reply_text("User cannot be GLOBALLY KICKED because: {}".format(excp.message))
+            message.reply_text("User cannot be Globally kicked because: {}".format(excp.message))
             return
     except TelegramError:
             pass
@@ -47,16 +47,16 @@ def gkick(bot: Bot, update: Update, args: List[str]):
         message.reply_text("You do not seems to be referring to a user")
         return
     if int(user_id) in SUDO_USERS or int(user_id) in SUPPORT_USERS:
-        message.reply_text("OHHH! Someone's trying to GKICK a sudo/support user! *Grabs popcorn*")
+        message.reply_text("OHHH! Someone's trying to gkick a sudo/support user! *Grabs popcorn*")
         return
     if int(user_id) == OWNER_ID:
-        message.reply_text("WOW! Someone's so noob that he want to GKICK my owner! *Grabs Potato Chips*")
+        message.reply_text("Wow! Someone's so noob that he want to gkick my owner! *Grabs Potato Chips*")
         return
     if int(user_id) == bot.id:
-        message.reply_text("OHH...😭 Let me kick myself.. No way... 🤪")
+        message.reply_text("OHH... Let me kick myself.. No way... ")
         return
     chats = get_all_chats()
-    message.reply_text("GLOBALLY KICKING USER @{}".format(user_chat.username))
+    message.reply_text("Globally kicking user @{}".format(user_chat.username))
     for chat in chats:
         try:
              bot.unban_chat_member(chat.chat_id, user_id)  # Unban_member = kick (and not ban)
@@ -64,7 +64,7 @@ def gkick(bot: Bot, update: Update, args: List[str]):
             if excp.message in GKICK_ERRORS:
                 pass
             else:
-                message.reply_text("User cannot be GLOBALLY KICKED because: {}".format(excp.message))
+                message.reply_text("User cannot be Globally kicked because: {}".format(excp.message))
                 return
         except TelegramError:
             pass

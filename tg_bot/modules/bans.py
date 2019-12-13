@@ -72,11 +72,11 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("I really wish I could BAN ADMINS...")
+        message.reply_text("I really wish I could ban admins...")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you CRAZY?")
+        message.reply_text("I'm not gonna BAN myself, are you crazy?")
         return ""
 
     log = "<b>{}:</b>" \
@@ -104,7 +104,7 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't BAN that user.")
+            message.reply_text("Well damn, I can't ban that user.")
 
     return ""
 
@@ -135,15 +135,15 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("I really wish I could BAN ADMINS...")
+        message.reply_text("I really wish I could ban admins...")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you CRAZY?")
+        message.reply_text("I'm not gonna BAN myself, are you crazy?")
         return ""
 
     if not reason:
-        message.reply_text("You haven't specified a time to BAN this user for!")
+        message.reply_text("You haven't specified a time to ban this user for!")
         return ""
 
     split_reason = reason.split(None, 1)
@@ -171,19 +171,19 @@ def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
     try:
         chat.kick_member(user_id, until_date=bantime)
         bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-        message.reply_text("BANNED! User will be BANNED for {}.".format(time_val))
+        message.reply_text("Banned! User will be banned for {}.".format(time_val))
         return log
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text("BANNED User will be BANNED for {}.".format(time_val), quote=False)
+            message.reply_text("Banned! User will be banned for {}.".format(time_val), quote=False)
             return log
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't BAN that user.")
+            message.reply_text("Well damn, I can't ban that user.")
 
     return ""
 
@@ -213,7 +213,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if is_user_ban_protected(chat, user_id):
-        message.reply_text("I really wish I could KICK ADMINS...")
+        message.reply_text("I really wish I could kick admins...")
         return ""
 
     if user_id == bot.id:
@@ -223,7 +223,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
     res = chat.unban_member(user_id)  # unban on current user = kick
     if res:
         bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-        message.reply_text("KICKED!")
+        message.reply_text("Kicked!")
         log = "<b>{}:</b>" \
               "\n#KICKED" \
               "\n<b>Admin:</b> {}" \
@@ -236,7 +236,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
         return log
 
     else:
-        message.reply_text("Well damn, I can't KICK that user.")
+        message.reply_text("Well damn, I can't kick that user.")
 
     return ""
 
@@ -247,7 +247,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
 def kickme(bot: Bot, update: Update):
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("I wish I could... but you're an ADMIN.")
+        update.effective_message.reply_text("I wish I could... but you're an admin.")
         return
 
     res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
@@ -282,11 +282,11 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if user_id == bot.id:
-        message.reply_text("How would I UNBAN myself if I wasn't here...?")
+        message.reply_text("How would I unban myself if I wasn't here...?")
         return ""
 
     if is_user_in_chat(chat, user_id):
-        message.reply_text("Why are you trying to UNBAN someone that's already in the chat?")
+        message.reply_text("Why are you trying to unban someone that's already in the chat?")
         return ""
 
     chat.unban_member(user_id)
@@ -336,7 +336,7 @@ def rban(bot: Bot, update: Update, args: List[str]):
         return
 
     if not is_bot_admin(chat, bot.id) or not chat.get_member(bot.id).can_restrict_members:
-        message.reply_text("I can't restrict people there! Make sure I'm ADMIN and can ban users.")
+        message.reply_text("I can't restrict people there! Make sure I'm admin and can ban users.")
         return
 
     try:
@@ -349,27 +349,27 @@ def rban(bot: Bot, update: Update, args: List[str]):
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("I really wish I could BAN ADMINS...")
+        message.reply_text("I really wish I could ban admins...")
         return
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna BAN myself, are you CRAZY?")
+        message.reply_text("I'm not gonna BAN myself, are you crazy?")
         return
 
     try:
         chat.kick_member(user_id)
-        message.reply_text("BANNED!")
+        message.reply_text("Banned!")
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text('BANNED!', quote=False)
+            message.reply_text('Banned!', quote=False)
         elif excp.message in RBAN_ERRORS:
             message.reply_text(excp.message)
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't BAN that user.")
+            message.reply_text("Well damn, I can't ban that user.")
 
 @run_async
 @bot_admin
@@ -403,7 +403,7 @@ def runban(bot: Bot, update: Update, args: List[str]):
         return
 
     if not is_bot_admin(chat, bot.id) or not chat.get_member(bot.id).can_restrict_members:
-        message.reply_text("I can't unrestrict people there! Make sure I'm ADMIN and can UNBAN users.")
+        message.reply_text("I can't unrestrict people there! Make sure I'm admin and can unban users.")
         return
 
     try:
@@ -416,11 +416,11 @@ def runban(bot: Bot, update: Update, args: List[str]):
             raise
             
     if is_user_in_chat(chat, user_id):
-        message.reply_text("Why are you trying to remotely UNBAN someone that's already in that chat?")
+        message.reply_text("Why are you trying to remotely unban someone that's already in that chat?")
         return
 
     if user_id == bot.id:
-        message.reply_text("I'm not gonna UNBAN myself, I'm an ADMIN here!")
+        message.reply_text("I'm not gonna UNBAN myself, I'm an admin there!")
         return
 
     try:
@@ -429,14 +429,14 @@ def runban(bot: Bot, update: Update, args: List[str]):
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text('UNBANNED!', quote=False)
+            message.reply_text('Unbanned!', quote=False)
         elif excp.message in RUNBAN_ERRORS:
             message.reply_text(excp.message)
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR unbanning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("Well damn, I can't UNBAN that user.")
+            message.reply_text("Well damn, I can't unban that user.")
 
 
 __help__ = """

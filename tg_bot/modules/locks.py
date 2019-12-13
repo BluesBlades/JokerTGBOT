@@ -106,7 +106,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=True)
-                message.reply_text("LOCKED {} messages for all NON-ADMINS!".format(args[0]))
+                message.reply_text("Locked {} messages for all non-admins!".format(args[0]))
 
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
@@ -120,7 +120,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                     members = users_sql.get_chat_members(str(chat.id))
                     restr_members(bot, chat.id, members, messages=True, media=True, other=True)
 
-                message.reply_text("LOCKED {} for all NON-ADMINS!".format(args[0]))
+                message.reply_text("Locked {} for all non-admins!".format(args[0]))
                 return "<b>{}:</b>" \
                        "\n#LOCK" \
                        "\n<b>Admin:</b> {}" \
@@ -128,10 +128,10 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                                                           mention_html(user.id, user.first_name), args[0])
 
             else:
-                message.reply_text("What are you trying to LOCK...? Try /locktypes for the list of LOCKABLED")
+                message.reply_text("What are you trying to lock...? Try /locktypes for the list of lockables")
 
     else:
-        message.reply_text("I'm not an ADMINISTRATOR, or haven't got delete rights.")
+        message.reply_text("I'm not an administrator, or haven't got delete rights.")
 
     return ""
 
@@ -147,7 +147,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=False)
-                message.reply_text("UNLOCKED {} for everyone!".format(args[0]))
+                message.reply_text("Unlocked {} for everyone!".format(args[0]))
                 return "<b>{}:</b>" \
                        "\n#UNLOCK" \
                        "\n<b>Admin:</b> {}" \
@@ -181,10 +181,10 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                        "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
                                                             mention_html(user.id, user.first_name), args[0])
             else:
-                message.reply_text("What are you trying to UNLOCK...? Try /locktypes for the list of UN-LOCKABLES")
+                message.reply_text("What are you trying to unlock...? Try /locktypes for the list of lockables")
 
         else:
-            bot.sendMessage(chat.id, "What are you trying to UNLOCK...?")
+            bot.sendMessage(chat.id, "What are you trying to unlock...?")
 
     return ""
 
@@ -203,11 +203,11 @@ def del_lockables(bot: Bot, update: Update):
                     if new_mem.is_bot:
                         if not is_bot_admin(chat, bot.id):
                             message.reply_text("I see a bot, and I've been told to stop them joining... "
-                                               "but I'm not ADMIN!")
+                                               "but I'm not admin!")
                             return
 
                         chat.kick_member(new_mem.id)
-                        message.reply_text("Only ADMIND are allowed to add bots to this chat! Get outta here.")
+                        message.reply_text("Only admins are allowed to add bots to this chat! Get outta here.")
             else:
                 try:
                     message.delete()

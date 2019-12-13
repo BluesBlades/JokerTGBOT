@@ -28,16 +28,16 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("MENTION SOMEONE.... 🤷🏻‍♂.")
+        message.reply_text("mension one.... 🤷🏻‍♂.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
-        message.reply_text("How am I meant to PROMOTE someone that's already an ADMIN?")
+        message.reply_text("How am I meant to promote someone that's already an admin?")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't PROMOTE myself! Get an ADMIN to do it for me.")
+        message.reply_text("I can't promote myself! Get an admin to do it for me.")
         return ""
 
     # set same perms as bot - bot can't assign higher perms than itself!
@@ -53,7 +53,7 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
-    message.reply_text("Successfully PROMOTED🎮")
+    message.reply_text("promoted🧡")
     return "<b>{}:</b>" \
            "\n#PROMOTED" \
            "\n<b>Admin:</b> {}" \
@@ -74,20 +74,20 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("MENTION SOMEONE.... 🤷🏻‍♂.")
+        message.reply_text("mension one.... 🤷🏻‍♂.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'creator':
-        message.reply_text("i cant BAN CREATOR of the group.... 😬")
+        message.reply_text("i cant ban creator of the group.... 😬")
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text("Can't DEMOTE what wasn't PROMOTED!")
+        message.reply_text("Can't demote what wasn't promoted!")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't DEMOTE myself! Get an ADMIN to do it for me.")
+        message.reply_text("I can't demote myself! Get an admin to do it for me.")
         return ""
 
     try:
@@ -100,7 +100,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_restrict_members=False,
                               can_pin_messages=False,
                               can_promote_members=False)
-        message.reply_text("Successfully DEMOTED🤪")
+        message.reply_text("Successfully demoted!")
         return "<b>{}:</b>" \
                "\n#DEMOTED" \
                "\n<b>Admin:</b> {}" \
@@ -109,7 +109,7 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                                           mention_html(user_member.user.id, user_member.user.first_name))
 
     except BadRequest:
-        message.reply_text("Could not DEMOTE. I might not be ADMIN, or the ADMIN status was appointed by another "
+        message.reply_text("Could not demote. I might not be admin, or the admin status was appointed by another "
                            "user, so I can't act upon them!")
         return ""
 
@@ -198,8 +198,8 @@ def adminlist(bot: Bot, update: Update):
         if user.username:
             name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
         if status == "creator":
-            text += "\n ⚔️ Creator:"
-            text += "\n` ➪ `{} \n\n 🗡️ Admin:".format(name)
+            text += "\n 🔱 Creator:"
+            text += "\n` • `{} \n\n 🔰 Admin:".format(name)
     for admin in administrators:
         user = admin.user
         status = admin.status
